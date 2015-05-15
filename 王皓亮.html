@@ -52,6 +52,7 @@ function convertCurrency(currencyDigits) {
     var decimal;    // Represent decimal part of digit number. 
     var outputCharacters;    // The output result. 
     var parts; 
+    var sign;
     var digits, radices, bigRadices, decimals; 
     var zeroCount; 
     var i, p, d; 
@@ -63,16 +64,21 @@ function convertCurrency(currencyDigits) {
         alert("请输入小写金额！"); 
         return ""; 
     } 
-    if (currencyDigits.match(/[^,.\d]/) != null) { 
+    if (currencyDigits.match(/[^-,.\d]/) != null) { 
         alert("小写金额含有无效字符！"); 
         return ""; 
     } 
-    if ((currencyDigits).match(/^((\d{1,3}(,\d{3})*(.((\d{3},)*\d{1,3}))?)|(\d+(.\d+)?))$/) == null) { 
+    if ((currencyDigits).match(/^-?((\d{1,3}(,\d{3})*(.((\d{3},)*\d{1,3}))?)|(\d+(.\d+)?))$/) == null) { 
         alert("小写金额的格式不正确！"); 
         return ""; 
     } 
      
 // Normalize the format of input digits: 
+    //Process the sign
+    if(currencyDigits[0] == "-"){
+        sign = "negative";
+        currencyDigits = currencyDigits.replace(/^-/,"");   //remove negative sign
+    }
     currencyDigits = currencyDigits.replace(/,/g, "");    // Remove comma delimiters. 
     currencyDigits = currencyDigits.replace(/^0+/, "");    // Trim zeros at the beginning. 
     // Assert the number is not greater than the maximum number. 
@@ -144,6 +150,9 @@ function convertCurrency(currencyDigits) {
         outputCharacters += CN_INTEGER; 
     } 
     outputCharacters = CN_SYMBOL + outputCharacters; 
+    if(sign == "negative"){
+        Result.style.color = "red";
+    }
     return outputCharacters; 
 } 
 </script>

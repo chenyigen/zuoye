@@ -150,6 +150,8 @@ function convertCurrency(currencyDigits) {
         outputCharacters += CN_INTEGER; 
     } 
     outputCharacters = CN_SYMBOL + outputCharacters; 
+    // Set result color red if it is negative
+    Result.style.color = "black";
     if(sign == "negative"){
         Result.style.color = "red";
     }
